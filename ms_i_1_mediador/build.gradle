@@ -1,0 +1,59 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE')
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+// tag::plugin[]
+apply plugin: 'docker'
+// end::plugin[]
+
+// This is used as the docker image prefix (eg. org)
+group = 'class_unirio'
+
+jar {
+    baseName = 'mediator_microservice'
+    version =  '0.4.0'
+}
+
+// tag::task[]
+task buildDocker(type: Docker, dependsOn: build) {
+  applicationName = jar.baseName
+  dockerfile = file('Dockerfile')
+  doFirst {
+    copy {
+      from jar
+      into "${stageDir}/target"
+    }
+  }
+}
+// end::task[]
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    //testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile group: 'org.projectlombok', name: 'lombok-maven-plugin', version: '1.16.20.0'
+    compile group: 'com.graphql-java', name: 'graphql-java', version: '5.0'
+    compile group: 'com.graphql-java', name: 'graphql-java-tools', version: '4.1.2'
+    compile group: 'com.graphql-java', name: 'graphql-java-servlet', version: '4.4.0'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
+    compile group: 'org.json', name: 'json', version: '20171018'
+    compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: '0.24.0.RELEASE'
+    //compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
+    //compile group: 'org.springframework.data', name: 'spring-data-redis', version: '1.8.1.RELEASE'
+    //compile group: 'org.twitter4j', name: 'twitter4j-core', version: '4.0.6'
+}

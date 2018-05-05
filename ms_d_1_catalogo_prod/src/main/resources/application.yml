@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      host: mongodb
+      port: 27017
+
+ribbon:
+  ServerListRefreshInterval: 1000
+
+endpoints:
+  health:
+    sensitive: false
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    boot: DEBUG
+    dao: DEBUG
+    service: DEBUG
+    controller: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+

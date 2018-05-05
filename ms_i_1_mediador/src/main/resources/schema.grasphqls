@@ -1,0 +1,48 @@
+schema {
+    query: Query
+}
+
+type Query {
+    buscaCliente(nome : String, nacionalidade : String) : [Cliente]
+    buscaProduto(tipo : String, nacionalidadeFornecedor : String): [Produto]
+    buscaCarroCompras : [CarroCompras]
+}
+
+enum CodNacionalidade {
+    BR
+    PT
+    US
+    UK
+    DE
+    AR
+    CA
+    NE
+}
+
+type CarroCompras {
+    cliente(nome : String): Cliente!
+    dataCompra: String
+    produtos(modelo : String, tipo : String): [Produto]!
+}
+
+type Endereco {
+    nome: String!
+    nacionalidade: CodNacionalidade!
+}
+
+type Cliente {
+    nome: String!
+    endereco: Endereco!
+    carros: [CarroCompras]
+}
+
+type Fornecedor {
+    nome: String!
+    pais: CodNacionalidade!
+}
+
+type Produto {
+    modelo: String!
+    tipo: String!
+    fornecedor: Fornecedor!
+}
