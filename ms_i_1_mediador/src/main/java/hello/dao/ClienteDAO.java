@@ -16,7 +16,8 @@ public class ClienteDAO {
     private static final Logger logger = LoggerFactory.getLogger(ClienteDAO.class);
 
     //chamadas a microsservicos
-    public static final String URL_COM_FILTRO_NACIONALIDADE = "http://ms03_cadcliente:8080/cadcliente/buscapornacionalidade?nacionalidade=";
+    public static final String URL_COM_FILTRO_NACIONALIDADE = "http://ms03_cadcliente:8080/cadcliente/search/findByEnderecoNacionalidade?nacionalidade=";
+    public static final String URL_COM_FILTRO_ID = "http://ms03_cadcliente:8080/cadcliente/";
     public static final String URL_SEM_FILTRO = "http://ms03_cadcliente:8080/cadcliente";
 
     private Map<Filtro, Object> filtros;
@@ -29,6 +30,11 @@ public class ClienteDAO {
 
     public void addFiltro(Filtro chave, Object valor) {
         filtros.put(chave,valor);
+    }
+
+    public Cliente getCliente(String id) {
+        String url = URL_COM_FILTRO_ID+id;
+        return  clienteRestfulServiceProvider.fetchListForCliente(url);
     }
 
     public List<Cliente> getClientes() {

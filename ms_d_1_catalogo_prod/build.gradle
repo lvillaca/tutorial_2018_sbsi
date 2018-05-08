@@ -52,10 +52,14 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    //testCompile("org.apache.jena:apache-jena-libs:3.5.0")
+ //   compile group: 'com.graphql-java', name: 'graphql-java', version: '5.0'
+ //   compile group: 'com.graphql-java', name: 'graphql-java-tools', version: '4.1.2'
+ //   compile group: 'com.graphql-java', name: 'graphql-java-servlet', version: '4.4.0'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
     compile group: 'org.json', name: 'json', version: '20171018'
     compile group: 'org.projectlombok', name: 'lombok-maven-plugin', version: '1.16.20.0'
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    //testCompile("org.springframework.boot:spring-boot-starter-test")
 }

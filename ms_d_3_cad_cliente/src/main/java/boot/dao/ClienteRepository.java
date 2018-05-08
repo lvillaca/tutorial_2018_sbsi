@@ -4,12 +4,12 @@ import domain.Cliente;
 import domain.Country;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@Repository
-//RestResource(collectionResourceRel = "cadcliente", path = "cadcliente")
+//@Repository
+@RepositoryRestResource(collectionResourceRel="cadcliente",path="cadcliente")
 public interface ClienteRepository extends CrudRepository<Cliente, String> {
-    List<Cliente> findByEnderecoNacionalidade(@Param("nacionalidadenacionalidade") Country country);
+    List<Cliente> findByEnderecoNacionalidade(@Param("nacionalidade") Country country);
 }

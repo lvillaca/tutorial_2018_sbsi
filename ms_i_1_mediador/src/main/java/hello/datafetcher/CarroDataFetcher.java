@@ -2,9 +2,8 @@ package hello.datafetcher;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
-import hello.dao.ClienteDAO;
-import hello.domain.Cliente;
-import hello.domain.Filtro;
+import hello.dao.CarroComprasDAO;
+import hello.domain.CarroCompras;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +14,17 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-public class CarroDataFetcher implements DataFetcher<List<Cliente>> {
+public class CarroDataFetcher implements DataFetcher<List<CarroCompras>> {
 
     private static final Logger logger = LoggerFactory.getLogger(CarroDataFetcher.class);
 
     @Autowired
-    ClienteDAO clienteDAO;
+    CarroComprasDAO carroCompraDAO;
 
     ReentrantLock lock = new ReentrantLock();
 
     @Override
-    public List<Cliente> get(DataFetchingEnvironment dataFetchingEnvironment) {
+    public List<CarroCompras> get(DataFetchingEnvironment dataFetchingEnvironment) {
         Map parametros = dataFetchingEnvironment.getArguments();
         logger.debug("parametros"+parametros);
 
@@ -33,8 +32,9 @@ public class CarroDataFetcher implements DataFetcher<List<Cliente>> {
         try {
 
 
-            trataParametros(parametros);
-            int ultimos = 0;
+            //trataParametros(parametros);
+
+            //int ultimos = 0;
 
             try { //tenta pegar o campo
                 logger.debug("Outros parametros - pesquisar!");
@@ -61,25 +61,25 @@ public class CarroDataFetcher implements DataFetcher<List<Cliente>> {
 
 
             logger.debug("parametros" + parametros);
-            return clienteDAO.getClientes();
+            return carroCompraDAO.getCarroCompras();
 
 
 
         } finally {
-            clienteDAO.resetFiltros();
+            //CarroComprasDAO.resetFiltros();
             lock.unlock();
         }
     }
 
-    private void trataParametros(Map<String, Object> parametros) {
+/*    private void trataParametros(Map<String, Object> parametros) {
         for (Map.Entry<String, Object> parametro :parametros.entrySet()) {
             try {
                 Filtro filtro = Filtro.valueOf(parametro.getKey());
-                clienteDAO.addFiltro(filtro,parametro.getValue());
+                CarroComprasDAO.addFiltro(filtro,parametro.getValue());
             }
             catch (IllegalArgumentException ia) {
                 logger.debug("exc em parametro.getKey"+parametro.getKey());
             }
         }
-    }
+    }*/
 }

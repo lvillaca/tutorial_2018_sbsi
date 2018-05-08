@@ -16,7 +16,7 @@ public class RedisConfiguration {
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory jedisConFactory = new JedisConnectionFactory();
-        jedisConFactory.setHostName("redis_host");
+        jedisConFactory.setHostName("redisdb"); //nome do container na rede
         jedisConFactory.setPort(6379);
         jedisConFactory.afterPropertiesSet();
         return jedisConFactory;

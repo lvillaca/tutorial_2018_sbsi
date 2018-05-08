@@ -50,9 +50,10 @@ public class RestService {
     }
 
     @GetMapping("/carroscompra")
-    public List getAllCarrosDeCompra() {
+    public Iterable<CarroDeCompra> getAllCarrosDeCompra() {
         //iterable to list
-        return StreamSupport.stream(carroDeCompraRepository.findAll().spliterator(),false).collect(Collectors.toList());
+        //return StreamSupport.stream(carroDeCompraRepository.findAll().spliterator(),false).collect(Collectors.toList());
+        return carroDeCompraRepository.findAll();
     }
 
 

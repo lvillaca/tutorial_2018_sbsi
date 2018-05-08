@@ -2,9 +2,13 @@ buildscript {
     repositories {
         mavenCentral()
     }
+    //The “buildscript” block only controls dependencies for the buildscript process itself,
+    // not for the application code, which the top-level “dependencies” block controls.
     dependencies {
         classpath('org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE')
+// tag::build[]
         classpath('se.transmode.gradle:gradle-docker:1.2')
+// end::build[]
     }
 }
 
@@ -45,7 +49,9 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    //compile("org.apache.jena:apache-jena-libs:3.5.0")
     //testCompile("org.springframework.boot:spring-boot-starter-test")
+    //testCompile("org.apache.jena:apache-jena-libs:3.5.0")
     compile group: 'org.projectlombok', name: 'lombok-maven-plugin', version: '1.16.20.0'
     compile group: 'com.graphql-java', name: 'graphql-java', version: '5.0'
     compile group: 'com.graphql-java', name: 'graphql-java-tools', version: '4.1.2'

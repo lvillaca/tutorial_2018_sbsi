@@ -18,8 +18,8 @@ public class ProdutoDAO {
     private static final Logger logger = LoggerFactory.getLogger(ProdutoDAO.class);
 
     //chamadas a microsservicos
-    public static final String URL_COM_FILTRO_NACIONALIDADE = "http://ms01_catalogoprod:8080/catalogoprod/buscapaisfornecedor?pais=";
-    public static final String URL_COM_FILTRO_TIPO = "http://ms01_catalogoprod:8080/catalogoprod/buscaportipo?tipo=";
+    public static final String URL_COM_FILTRO_NACIONALIDADE = "http://ms01_catalogoprod:8080/catalogoprod/search/findByFornecedorPais?pais=";
+    public static final String URL_COM_FILTRO_TIPO = "http://ms01_catalogoprod:8080/catalogoprod/search/findByTipo?tipo=";
     public static final String URL_SEM_FILTRO = "http://ms01_catalogoprod:8080/catalogoprod/";
 
     private Map<Filtro, Object> filtros;
@@ -59,7 +59,7 @@ public class ProdutoDAO {
         //Se a API nao dispoe de filtros simultaneos, aplicar depois...
         return outerList.stream().filter(produto -> {
             if (filtros.containsKey(Filtro.tipo)) {
-                return produto.getTipo().equals(filtros.get(Filtro.nome));
+                return produto.getTipo().equals(filtros.get(Filtro.tipo));
             } else {
                 return true;
             }
