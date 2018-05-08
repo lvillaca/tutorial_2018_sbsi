@@ -1,6 +1,7 @@
 package hello.dao;
 
 import hello.domain.Filtro;
+import hello.domain.ItemCarroCompras;
 import hello.domain.Produto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ public class ProdutoDAO {
     public static final String URL_COM_FILTRO_NACIONALIDADE = "http://ms01_catalogoprod:8080/catalogoprod/search/findByFornecedorPais?pais=";
     public static final String URL_COM_FILTRO_TIPO = "http://ms01_catalogoprod:8080/catalogoprod/search/findByTipo?tipo=";
     public static final String URL_SEM_FILTRO = "http://ms01_catalogoprod:8080/catalogoprod/";
+    public static final String URL_COM_FILTRO_ID = "http://ms01_catalogoprod:8080/catalogoprod/";
 
     private Map<Filtro, Object> filtros;
 
@@ -35,8 +37,6 @@ public class ProdutoDAO {
     }
 
     public List<Produto> getProdutos() {
-
-        List<Produto> innerList = new ArrayList();
 
         List<Produto> outerList = null;
 
@@ -65,6 +65,32 @@ public class ProdutoDAO {
             }
         }).collect(Collectors.toList());
 
+    }
+
+    public List<Produto> getProdutos(List<ItemCarroCompras> innerList) {
+
+        if (innerList != null) {
+            return
+                    //varre lista de itens
+                    innerList.stream().map(item -> produtoRestfulServiceProvider.
+                            // e popula cada produto
+                    fetchListForProduto(URL_COM_FILTRO_ID+item.getProduto().getId())).
+            filter(novoProduto -> {
+                        //aplica filtros a instancia populada
+                if (filtros.containsKey(Filtro.modelo)) {
+                    if (!novoProduto.getModelo().equals(filtros.get(Filtro.modelo))) {
+                        return false;
+                    }
+                }
+                if (filtros.containsKey(Filtro.tipo)) {
+                    if (!novoProduto.getTipo().equals(filtros.get(Filtro.tipo))) {
+                        return false;
+                    }
+                }
+                return true;
+            }).collect(Collectors.toList());
+        }
+        return new ArrayList<>();
     }
 
     public void resetFiltros() {

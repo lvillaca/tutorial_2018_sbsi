@@ -2,8 +2,9 @@ package hello.datafetcher;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
-import hello.dao.ClienteDAO;
-import hello.domain.Cliente;
+import hello.dao.ProdutoDAO;
+import hello.domain.CarroCompras;
+import hello.domain.Produto;
 import hello.domain.Filtro;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,19 +16,20 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-public class ProdutosPorCarroDataFetcher implements DataFetcher<List<Cliente>> {
+public class ProdutosPorCarroDataFetcher implements DataFetcher<List<Produto>> {
 
     private static final Logger logger = LoggerFactory.getLogger(ProdutosPorCarroDataFetcher.class);
 
     @Autowired
-    ClienteDAO clienteDAO;
+    ProdutoDAO produtoDAO;
 
     ReentrantLock lock = new ReentrantLock();
 
     @Override
-    public List<Cliente> get(DataFetchingEnvironment dataFetchingEnvironment) {
+    public List<Produto> get(DataFetchingEnvironment dataFetchingEnvironment) {
         Map parametros = dataFetchingEnvironment.getArguments();
-        logger.debug("parametros"+parametros);
+        CarroCompras carro = dataFetchingEnvironment.getSource();
+        logger.debug("parametros??"+parametros);
 
         lock.lock();
         try {
@@ -61,12 +63,12 @@ public class ProdutosPorCarroDataFetcher implements DataFetcher<List<Cliente>> {
 
 
             logger.debug("parametros" + parametros);
-            return clienteDAO.getClientes();
+            return produtoDAO.getProdutos(carro.getListaProdutoEscolhido());
 
 
 
         } finally {
-            clienteDAO.resetFiltros();
+            produtoDAO.resetFiltros();
             lock.unlock();
         }
     }
@@ -75,7 +77,7 @@ public class ProdutosPorCarroDataFetcher implements DataFetcher<List<Cliente>> {
         for (Map.Entry<String, Object> parametro :parametros.entrySet()) {
             try {
                 Filtro filtro = Filtro.valueOf(parametro.getKey());
-                clienteDAO.addFiltro(filtro,parametro.getValue());
+                produtoDAO.addFiltro(filtro,parametro.getValue());
             }
             catch (IllegalArgumentException ia) {
                 logger.debug("exc em parametro.getKey"+parametro.getKey());

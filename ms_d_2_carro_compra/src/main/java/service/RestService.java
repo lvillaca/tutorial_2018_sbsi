@@ -32,18 +32,18 @@ public class RestService {
 
         // itens de compra
         List<ItemCarroDeCompra> items = new ArrayList<>();
-        items.add(new ItemCarroDeCompra("prod45",33,234));
-        items.add(new ItemCarroDeCompra("prod454",343,23454));
+        items.add(new ItemCarroDeCompra("007",33,234));
+        items.add(new ItemCarroDeCompra("006",343,23454));
         //fechando um carro
-        CarroDeCompra carr = new CarroDeCompra("0704354",items,"cli73", new Date());
+        CarroDeCompra carr = new CarroDeCompra("0704354",items,"006", new Date());
         carroDeCompraRepository.save(carr);
 
         // itens de compra
         List<ItemCarroDeCompra> items2 = new ArrayList<>();
-        items2.add(new ItemCarroDeCompra("prod43",33,234));
-        items2.add(new ItemCarroDeCompra("prod424",343,2454));
+        items2.add(new ItemCarroDeCompra("006",33,234));
+        items2.add(new ItemCarroDeCompra("007",343,2454));
         //fechando outro carro
-        CarroDeCompra carr2 = new CarroDeCompra("070424",items2,"cli733", new Date());
+        CarroDeCompra carr2 = new CarroDeCompra("070424",items2,"007", new Date());
         carroDeCompraRepository.save(carr2);
 
         return "Carro de compras salvo";

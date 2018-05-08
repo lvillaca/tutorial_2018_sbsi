@@ -58,6 +58,8 @@ public class QueryMediator {
     private CarroDataFetcher carroDataFetcher;
     @Autowired
     private ClientePorCarroDataFetcher clientePorCarroDataFetcher;
+    @Autowired
+    private ProdutosPorCarroDataFetcher produtosPorCarroDataFetcher;
 
     @PostConstruct
     public void loadSchema() throws IOException {
@@ -85,7 +87,8 @@ public class QueryMediator {
                         .dataFetcher("buscaProduto", produtoDataFetcher)
                         .dataFetcher("buscaCarroCompras", carroDataFetcher))
                 .type("CarroCompras", builder -> builder
-                        .dataFetcher("cliente", clientePorCarroDataFetcher))
+                        .dataFetcher("cliente", clientePorCarroDataFetcher)
+                        .dataFetcher("produtos", produtosPorCarroDataFetcher))
                 .build();
 
         /*return newRuntimeWiring()

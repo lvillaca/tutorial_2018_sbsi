@@ -140,4 +140,31 @@ public class RestfulServiceProvider<E> {
         return rateResponse2.getBody().getContent();
 
     }
+
+    public Produto fetchListForProduto(String url) {
+
+        template = new RestTemplate();
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.registerModule(new Jackson2HalModule());
+
+        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+        messageConverter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/hal+json"));
+        messageConverter.setObjectMapper(mapper);
+
+
+        template.setMessageConverters(Arrays.asList(messageConverter));
+        ResponseEntity<Resource<Produto>> rateResponse2 =
+                template.exchange(url,
+                        HttpMethod.GET, null, new ParameterizedTypeReference<Resource<Produto>>() {
+                        });
+
+        System.out.println("Response 2"+rateResponse2);
+        System.out.println("Response 2.1"+rateResponse2.getBody());
+        return rateResponse2.getBody().getContent();
+
+    }
+
+
 }
