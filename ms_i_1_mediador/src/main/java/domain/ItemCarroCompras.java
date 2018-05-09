@@ -14,12 +14,18 @@ import lombok.NoArgsConstructor;
 public class ItemCarroCompras {
     @JsonIgnore Produto produto;
     int  qtdProduto;
-    long valorUnitario;
+    float valorUnitario;
 
     @JsonSetter("idProdutoEscolhido")
     public void setProduto(String idProdutoEscolhido) {
         this.produto = new Produto();
         produto.setId(idProdutoEscolhido);
+    }
+
+    public void refreshProduto(Produto outraInst) {
+        this.produto.setFornecedor(outraInst.getFornecedor());
+        this.produto.setModelo(outraInst.getModelo());
+        this.produto.setTipo(outraInst.getTipo());
     }
 
 }

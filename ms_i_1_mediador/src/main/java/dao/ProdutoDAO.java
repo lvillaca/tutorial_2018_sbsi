@@ -36,7 +36,7 @@ public class ProdutoDAO {
         filtros.put(chave,valor);
     }
 
-    public List<Produto> getProdutos() {
+    public List<Produto> getProdutosDeItensDeCompras() {
 
         List<Produto> outerList = null;
 
@@ -67,23 +67,24 @@ public class ProdutoDAO {
 
     }
 
-    public List<Produto> getProdutos(List<ItemCarroCompras> innerList) {
+    public List<ItemCarroCompras> getProdutosDeItensDeCompras(List<ItemCarroCompras> innerList) {
 
         if (innerList != null) {
-            return
-                    //varre lista de itens
-                    innerList.stream().map(item -> produtoRestfulServiceProvider.
-                            // e popula cada produto
-                    fetchListForProduto(URL_COM_FILTRO_ID+item.getProduto().getId())).
-            filter(novoProduto -> {
+
+            //varre lista de itens e popula cada produto
+            innerList.stream().forEach(item -> item.refreshProduto(produtoRestfulServiceProvider.
+            fetchListForProduto(URL_COM_FILTRO_ID+item.getProduto().getId())));
+
+            //retorn o que for valido
+            return innerList.stream().filter(novoItemProduto -> {
                         //aplica filtros a instancia populada
                 if (filtros.containsKey(Filtro.modelo)) {
-                    if (!novoProduto.getModelo().equals(filtros.get(Filtro.modelo))) {
+                    if (!novoItemProduto.getProduto().getModelo().equals(filtros.get(Filtro.modelo))) {
                         return false;
                     }
                 }
                 if (filtros.containsKey(Filtro.tipo)) {
-                    if (!novoProduto.getTipo().equals(filtros.get(Filtro.tipo))) {
+                    if (!novoItemProduto.getProduto().getTipo().equals(filtros.get(Filtro.tipo))) {
                         return false;
                     }
                 }

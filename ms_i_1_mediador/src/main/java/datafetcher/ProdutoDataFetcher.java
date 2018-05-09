@@ -61,7 +61,7 @@ public class ProdutoDataFetcher implements DataFetcher<List<Produto>> {
 
 
             logger.debug("parametros" + parametros);
-            return produtoDAO.getProdutos();
+            return produtoDAO.getProdutosDeItensDeCompras();
 
 
 

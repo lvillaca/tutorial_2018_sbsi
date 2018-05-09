@@ -22,8 +22,16 @@ enum CodNacionalidade {
 type CarroCompras {
     cliente(nome : String): Cliente!
     dataCompra: String
-    produtos(modelo : String, tipo : String): [Produto]!
+    compras(modelo : String, tipo : String): [ItemCarroCompras]!
 }
+
+type ItemCarroCompras {
+    valorUnitario: Float
+    qtdProduto: Int
+    produto: Produto!
+}
+
+
 
 type Endereco {
     nome: String!
