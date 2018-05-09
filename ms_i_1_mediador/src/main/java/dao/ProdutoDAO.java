@@ -1,8 +1,8 @@
-package hello.dao;
+package dao;
 
-import hello.domain.Filtro;
-import hello.domain.ItemCarroCompras;
-import hello.domain.Produto;
+import domain.Filtro;
+import domain.ItemCarroCompras;
+import domain.Produto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class ProdutoDAO {
 
     private Map<Filtro, Object> filtros;
 
-    RestfulServiceProvider<Produto> produtoRestfulServiceProvider = new RestfulServiceProvider<>();
+    RestfulServiceProvider produtoRestfulServiceProvider = new RestfulServiceProvider();
 
     public ProdutoDAO() {
         filtros = new HashMap<>();

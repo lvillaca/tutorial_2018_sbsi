@@ -1,11 +1,10 @@
-package hello.datafetcher;
+package datafetcher;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
-import hello.dao.ProdutoDAO;
-import hello.domain.Cliente;
-import hello.domain.Filtro;
-import hello.domain.Produto;
+import dao.ProdutoDAO;
+import domain.Filtro;
+import domain.Produto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

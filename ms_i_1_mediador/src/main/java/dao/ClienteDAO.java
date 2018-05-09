@@ -1,10 +1,9 @@
-package hello.dao;
+package dao;
 
-import hello.domain.Cliente;
-import hello.domain.Filtro;
+import domain.Cliente;
+import domain.Filtro;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -22,7 +21,7 @@ public class ClienteDAO {
 
     private Map<Filtro, Object> filtros;
 
-    RestfulServiceProvider<Cliente> clienteRestfulServiceProvider = new RestfulServiceProvider<>();
+    RestfulServiceProvider clienteRestfulServiceProvider = new RestfulServiceProvider();
 
     public ClienteDAO() {
         filtros = new HashMap<>();

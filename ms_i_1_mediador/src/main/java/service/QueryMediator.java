@@ -1,11 +1,10 @@
-package hello;
+package service;
 
-import hello.datafetcher.*;
+import datafetcher.*;
 
 import graphql.ExecutionResult;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
-import graphql.schema.StaticDataFetcher;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
@@ -24,12 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStreamReader;
-import java.net.URL;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import static graphql.schema.idl.RuntimeWiring.newRuntimeWiring;
 

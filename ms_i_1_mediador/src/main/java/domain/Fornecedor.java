@@ -1,7 +1,6 @@
-package hello.domain;
+package domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Cliente {
-    String id; //nao mapeado no Schema
+public class Fornecedor {
     String nome;
-    Endereco endereco;
-    public Cliente(String id) {
-        this.id = id;
-    }
+    Nacionalidade pais;
 }

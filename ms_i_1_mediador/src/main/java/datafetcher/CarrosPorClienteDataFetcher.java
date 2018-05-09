@@ -1,9 +1,10 @@
-package hello.datafetcher;
+package datafetcher;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
-import hello.dao.CarroComprasDAO;
-import hello.domain.CarroCompras;
+import dao.ClienteDAO;
+import domain.Cliente;
+import domain.Filtro;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +15,17 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-public class CarroDataFetcher implements DataFetcher<List<CarroCompras>> {
+public class CarrosPorClienteDataFetcher implements DataFetcher<List<Cliente>> {
 
-    private static final Logger logger = LoggerFactory.getLogger(CarroDataFetcher.class);
+    private static final Logger logger = LoggerFactory.getLogger(CarrosPorClienteDataFetcher.class);
 
     @Autowired
-    CarroComprasDAO carroCompraDAO;
+    ClienteDAO clienteDAO;
 
     ReentrantLock lock = new ReentrantLock();
 
     @Override
-    public List<CarroCompras> get(DataFetchingEnvironment dataFetchingEnvironment) {
+    public List<Cliente> get(DataFetchingEnvironment dataFetchingEnvironment) {
         Map parametros = dataFetchingEnvironment.getArguments();
         logger.debug("parametros"+parametros);
 
@@ -32,9 +33,8 @@ public class CarroDataFetcher implements DataFetcher<List<CarroCompras>> {
         try {
 
 
-            //trataParametros(parametros);
-
-            //int ultimos = 0;
+            trataParametros(parametros);
+            int ultimos = 0;
 
             try { //tenta pegar o campo
                 logger.debug("Outros parametros - pesquisar!");
@@ -61,25 +61,25 @@ public class CarroDataFetcher implements DataFetcher<List<CarroCompras>> {
 
 
             logger.debug("parametros" + parametros);
-            return carroCompraDAO.getCarroCompras();
+            return clienteDAO.getClientes();
 
 
 
         } finally {
-            //CarroComprasDAO.resetFiltros();
+            clienteDAO.resetFiltros();
             lock.unlock();
         }
     }
 
-/*    private void trataParametros(Map<String, Object> parametros) {
+    private void trataParametros(Map<String, Object> parametros) {
         for (Map.Entry<String, Object> parametro :parametros.entrySet()) {
             try {
                 Filtro filtro = Filtro.valueOf(parametro.getKey());
-                CarroComprasDAO.addFiltro(filtro,parametro.getValue());
+                clienteDAO.addFiltro(filtro,parametro.getValue());
             }
             catch (IllegalArgumentException ia) {
                 logger.debug("exc em parametro.getKey"+parametro.getKey());
             }
         }
-    }*/
+    }
 }
