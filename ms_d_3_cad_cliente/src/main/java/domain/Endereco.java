@@ -17,5 +17,5 @@ public class Endereco {
     private int idEndereco;
 
     private String nome;
-    private Country nacionalidade;
+    private Country pais;
 }

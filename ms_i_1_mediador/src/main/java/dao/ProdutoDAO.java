@@ -44,7 +44,7 @@ public class ProdutoDAO {
         if (filtros.containsKey(Filtro.nacionalidadeFornecedor)) {
             String url = URL_COM_FILTRO_NACIONALIDADE+filtros.get(Filtro.nacionalidadeFornecedor);
             outerList = produtoRestfulServiceProvider.fetchListForProdutos(url);
-            filtros.remove(Filtro.nacionalidade); //jah usou
+            filtros.remove(Filtro.pais); //jah usou
         } else {
             //LIMITACAO DA API
             if (filtros.containsKey(Filtro.tipo)) {

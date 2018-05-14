@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Endereco {
     private String nome;
-    private Nacionalidade nacionalidade;
+    private Pais pais;
 }

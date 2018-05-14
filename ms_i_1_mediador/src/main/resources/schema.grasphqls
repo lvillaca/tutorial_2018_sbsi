@@ -3,12 +3,12 @@ schema {
 }
 
 type Query {
-    buscaCliente(nome : String, nacionalidade : String) : [Cliente]
-    buscaProduto(tipo : String, nacionalidadeFornecedor : String): [Produto]
+    buscaCliente(nome : String, pais : String) : [Cliente]
+    buscaProduto(tipo : String, paisFornecedor : String): [Produto]
     buscaCarroCompras : [CarroCompras]
 }
 
-enum CodNacionalidade {
+enum CodPais {
     BR
     PT
     US
@@ -35,7 +35,7 @@ type ItemCarroCompras {
 
 type Endereco {
     nome: String!
-    nacionalidade: CodNacionalidade!
+    pais: CodPais!
 }
 
 type Cliente {
@@ -46,7 +46,7 @@ type Cliente {
 
 type Fornecedor {
     nome: String!
-    pais: CodNacionalidade!
+    pais: CodPais!
 }
 
 type Produto {

@@ -10,10 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 @ComponentScan(basePackages = {"boot","service"})
 @RestController
 /**
@@ -32,10 +28,10 @@ public class RestService {
         //Endereco
         Endereco addr1 = new Endereco();
         addr1.setNome("Montana Av, SE");
-        addr1.setNacionalidade(Country.CA);
+        addr1.setPais(Country.CA);
         Endereco addr3 = new Endereco();
         addr3.setNome("Hollywood Blvd, CA");
-        addr3.setNacionalidade(Country.US);
+        addr3.setPais(Country.US);
 
         //Clientes
         Cliente cliente1 = new Cliente("006","Jason Becker",addr1);
@@ -61,8 +57,8 @@ public class RestService {
     }
 
     @RequestMapping(value="/cadcliente/buscapornacionalidade", method = RequestMethod.GET, produces = "application/json")
-    public List getByNacionalidade(@RequestParam(value="nacionalidade", defaultValue="") String nacionalidade) {
-        return clienteRepository.findByEnderecoNacionalidade(Country.valueOf(nacionalidade));
+    public List getByNacionalidade(@RequestParam(value="pais", defaultValue="") String pais) {
+        return clienteRepository.findByEnderecoNacionalidade(Country.valueOf(pais));
     }*/
 
 }

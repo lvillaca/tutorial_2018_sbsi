@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Fornecedor {
     String nome;
-    Nacionalidade pais;
+    Pais pais;
 }

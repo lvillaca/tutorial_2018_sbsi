@@ -11,5 +11,5 @@ import java.util.List;
 //@Repository
 @RepositoryRestResource(collectionResourceRel="cadcliente",path="cadcliente")
 public interface ClienteRepository extends CrudRepository<Cliente, String> {
-    List<Cliente> findByEnderecoNacionalidade(@Param("nacionalidade") Country country);
+    List<Cliente> findByEnderecoPais(@Param("pais") Country country);
 }
