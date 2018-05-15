@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"boot","service","aop"})
+@ComponentScan(basePackages = {"boot","service"})
 @RestController
 /**
  * @author Luis

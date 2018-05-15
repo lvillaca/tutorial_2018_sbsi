@@ -26,7 +26,7 @@ apply plugin: 'docker'
 group = 'class_unirio'
 
 jar {
-    baseName = 'catalogoprod_microservice'
+    baseName = 'proc_eventos_microservice'
     version =  '0.1.0'
 }
 
@@ -55,8 +55,7 @@ dependencies {
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
     compile group: 'org.json', name: 'json', version: '20171018'
     compile group: 'org.projectlombok', name: 'lombok-maven-plugin', version: '1.16.20.0'
-    compile("org.springframework.boot:spring-boot-starter-data-rest")
-    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    //compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-aop")
     compile("org.springframework.boot:spring-boot-starter-amqp")
     //testCompile("org.springframework.boot:spring-boot-starter-test")
