@@ -1,5 +1,6 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,12 +11,13 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Produto implements Serializable {
     private static final long serialVersionUID = -8760272805649222785L;
 
     String idProduto;
     String modelo;
-    Fornecedor fornecedor;
+    //Fornecedor fornecedor; - observar!!
     TipoProduto tipo;
 
     @Override

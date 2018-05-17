@@ -66,5 +66,7 @@ dependencies {
     compile group: 'org.projectlombok', name: 'lombok-maven-plugin', version: '1.16.20.0'
 //    compile group: 'org.springframework.data', name: 'spring-data-rest-webmvc', version: '3.0.6.RELEASE'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.9.5'
+    compile("org.springframework.boot:spring-boot-starter-aop")
+    compile("org.springframework.boot:spring-boot-starter-amqp")
 
 }
