@@ -1,10 +1,7 @@
 server:
   port: 8080
 
-#TODO: figure out why I need this here and in bootstrap.yml
 spring:
-  application:
-    name: testLatticeApp
   datasource:
     url: jdbc:mysql://mysqldb:3306/clientdt?useSSL=false
     username: usuariocli
@@ -17,29 +14,12 @@ spring:
       ddl-auto: create
     generate-ddl: true
 
-    #  jpa.hibernate.ddl-auto=create
-#  spring.jpa.generate-ddl=true
-#  clientdt eh a database criada no servidor
-
-
-ribbon:
-  ServerListRefreshInterval: 1000
-
-endpoints:
-  health:
-    sensitive: false
-  restart:
-    enabled: true
-  shutdown:
-    enabled: true
-
 logging:
   level:
     org.springframework.web: ERROR
     boot: DEBUG
-    dao: DEBUG
     service: DEBUG
-    controller: DEBUG
+    aop: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 

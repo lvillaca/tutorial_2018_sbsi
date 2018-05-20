@@ -12,11 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *//*
 
 
 package hello;
-
-import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +28,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -43,10 +44,11 @@ public class BootConfigurationTests {
 
     @Test
     public void testConectivity() throws Exception {
-        //ResponseEntity<String> entity = restTemplate
-          //      .getForEntity("http://localhost:" + this.port + "/", String.class);
-        //assertEquals(HttpStatus.OK, entity.getStatusCode());
+        ResponseEntity<String> entity = restTemplate
+                .getForEntity("http://localhost:" + this.port + "/", String.class);
+        assertEquals(HttpStatus.OK, entity.getStatusCode());
     }
 
 }
+
 */

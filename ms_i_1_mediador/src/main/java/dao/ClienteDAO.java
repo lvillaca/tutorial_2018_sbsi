@@ -38,8 +38,6 @@ public class ClienteDAO {
 
     public List<Cliente> getClientes() {
 
-        List<Cliente> innerList = new ArrayList();
-
         List<Cliente> outerList = null;
 
         //Aproveitando a API

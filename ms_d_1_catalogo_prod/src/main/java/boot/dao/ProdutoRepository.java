@@ -9,8 +9,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-//@Repository
-//@Component
 @RepositoryRestResource(collectionResourceRel = "catalogoprod", path = "catalogoprod")
 public interface ProdutoRepository extends CrudRepository<Produto, String> {
     List<Produto> findByFornecedorPais(@Param("pais") Country country);

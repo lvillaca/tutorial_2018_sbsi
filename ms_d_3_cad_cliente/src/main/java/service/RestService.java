@@ -41,25 +41,8 @@ public class RestService {
         clienteRepository.save(cliente1);
         clienteRepository.save(cliente2);
 
-        return "Cenario de produtos gerado";
+        return "Instâncias de clientes atualizadas";
     }
-
-   /* @GetMapping("/cadcliente")
-    public List getAllCarrosDeCompra() {
-        //iterable to list
-        return StreamSupport.stream(clienteRepository.findAll().spliterator(),false).collect(Collectors.toList());
-    }
-
-
-    @GetMapping("/cadcliente/{idCliente}")
-    public Cliente getByIdCliente(@PathVariable String idCliente){
-        return clienteRepository.findOne(idCliente);
-    }
-
-    @RequestMapping(value="/cadcliente/buscapornacionalidade", method = RequestMethod.GET, produces = "application/json")
-    public List getByNacionalidade(@RequestParam(value="pais", defaultValue="") String pais) {
-        return clienteRepository.findByEnderecoNacionalidade(Country.valueOf(pais));
-    }*/
 
 }
 

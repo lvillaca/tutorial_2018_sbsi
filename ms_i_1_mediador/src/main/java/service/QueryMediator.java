@@ -38,14 +38,6 @@ public class QueryMediator {
 
     private GraphQL graphQLInstance;
 
-    /*@Autowired
-    private BandaDataFetcher bandaDataFetcher;
-    @Autowired
-    private ArtistaDataFetcher artistaDataFetcher;
-    @Autowired
-    private BandaArtistaDataFetcher bandaArtistaDataFetcher;
-    @Autowired
-    private ArtistaBandaDataFetcher artistaBandaDataFetcher;*/
     @Autowired
     private ClienteDataFetcher clienteDataFetcher;
     @Autowired
@@ -59,8 +51,7 @@ public class QueryMediator {
 
     @PostConstruct
     public void loadSchema() throws IOException {
-        //  logger.debug("=================================================");
-        //  logger.debug("antes de abrir");
+
         logger.debug("==========================================");
 
 
@@ -86,25 +77,11 @@ public class QueryMediator {
                         .dataFetcher("cliente", clientePorCarroDataFetcher)
                         .dataFetcher("compras", comprasPorCarroDataFetcher))
                 .build();
-
-        /*return newRuntimeWiring()
-                .type("Query", builder -> builder
-                        .dataFetcher("buscaBanda", bandaDataFetcher)
-                        .dataFetcher("buscaArtista", artistaDataFetcher))
-                .type("Banda", builder -> builder
-                        .dataFetcher("artistas", bandaArtistaDataFetcher))
-                .type("Artista", builder -> builder
-                        .dataFetcher("bandas", artistaBandaDataFetcher))
-                .build();*/
     }
 
     @CrossOrigin
     @RequestMapping(value = "/query", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity executeQuery(@RequestBody String queryParam) {
-
-            //@RequestParam (value = "query",required=true, defaultValue = "{}")
-                                                   //String queryParam) {
-            //@RequestBody String queryParam) {
         logger.debug("========================================");
         logger.debug("Chamada de executeQuery com req body:"+queryParam);
 
@@ -123,20 +100,18 @@ public class QueryMediator {
             dataToQuery = queryParam;
         }
 
-        logger.debug("query 1 :"+dataToQuery);
-
         if(dataToQuery==null) {
             dataToQuery=queryParam;
         }
 
-        logger.debug("query 2 :"+dataToQuery);
+        logger.debug("query :"+dataToQuery);
 
         ExecutionResult executionResultOK = graphQLInstance.execute(dataToQuery);
 
 
-        System.out.println("resultado encontrado!!"+executionResultOK.getData());
-        System.out.println("erros encontrados!!"+executionResultOK.getErrors());
+        logger.debug("resultado encontrado!!"+executionResultOK.getData());
+        logger.debug("erros encontrados!!"+executionResultOK.getErrors());
 
-        return ResponseEntity.ok(executionResultOK.getData());//executionResult.getData().toString());
+        return ResponseEntity.ok(executionResultOK.getData());
     }
 }

@@ -20,8 +20,6 @@ public class ClientePorCarroDataFetcher implements DataFetcher<Cliente> {
     @Autowired
     ClienteDAO clienteDAO;
 
-    ReentrantLock lock = new ReentrantLock();
-
     @Override
     public Cliente get(DataFetchingEnvironment dataFetchingEnvironment) {
         CarroCompras carro = dataFetchingEnvironment.getSource();

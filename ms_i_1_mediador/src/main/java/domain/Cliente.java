@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Cliente {
-    String id; //nao mapeado no Schema
+    String id;
     String nome;
     Endereco endereco;
     public Cliente(String id) {

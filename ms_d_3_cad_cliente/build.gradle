@@ -3,21 +3,17 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-// tag::build[]
         classpath('org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE')
         classpath('se.transmode.gradle:gradle-docker:1.2')
-// end::build[]
     }
 }
 
-// tag::plugin[]
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
-// end::plugin[]
 
-// This is used as the docker image prefix (eg. org)
+
 group = 'class_unirio'
 
 jar {
@@ -25,7 +21,6 @@ jar {
     version =  '0.3.0'
 }
 
-// tag::task[]
 task buildDocker(type: Docker, dependsOn: build) {
   applicationName = jar.baseName
   dockerfile = file('Dockerfile')
@@ -36,7 +31,6 @@ task buildDocker(type: Docker, dependsOn: build) {
     }
   }
 }
-// end::task[]
 
 repositories {
     mavenCentral()

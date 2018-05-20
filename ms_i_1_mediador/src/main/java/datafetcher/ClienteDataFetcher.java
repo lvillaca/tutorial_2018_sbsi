@@ -22,52 +22,16 @@ public class ClienteDataFetcher implements DataFetcher<List<Cliente>> {
     @Autowired
     ClienteDAO clienteDAO;
 
-    ReentrantLock lock = new ReentrantLock();
-
     @Override
     public List<Cliente> get(DataFetchingEnvironment dataFetchingEnvironment) {
         Map parametros = dataFetchingEnvironment.getArguments();
         logger.debug("parametros"+parametros);
 
-        lock.lock();
         try {
-
-
             trataParametros(parametros);
-            int ultimos = 0;
-
-            try { //tenta pegar o campo
-                logger.debug("Outros parametros - pesquisar!");
-                logger.debug("Estrutura:"+dataFetchingEnvironment.getSelectionSet());
-/*
-            Field aField = dataFetchingEnvironment.getSelectionSet().get().get("tweets").get(0);
-            List<Argument> listArgs = aField.getArguments();
-            for (Argument a : listArgs) {
-                if (a.getName().equals("ultimos")) {
-                    Value aval = a.getValue();
-                    logger.debug("argumentos valor" + ((IntValue) aval).getValue());
-                    ultimos = ((IntValue) aval).getValue().intValue();
-                }
-            }
-*/
-            } catch (Exception e) {
-                //sem campo, ignora
-            }
-/*
-        if (ultimos > 0) {
-            artistaDAO.addFiltro(Filtro.ultimosTwitters, ultimos);
-        }
-*/
-
-
-            logger.debug("parametros" + parametros);
             return clienteDAO.getClientes();
-
-
-
         } finally {
             clienteDAO.resetFiltros();
-            lock.unlock();
         }
     }
 
@@ -78,7 +42,7 @@ public class ClienteDataFetcher implements DataFetcher<List<Cliente>> {
                 clienteDAO.addFiltro(filtro,parametro.getValue());
             }
             catch (IllegalArgumentException ia) {
-                logger.debug("exc em parametro.getKey"+parametro.getKey());
+                logger.debug("erro de parametro:"+parametro.getKey());
             }
         }
     }

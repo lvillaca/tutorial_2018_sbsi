@@ -21,7 +21,7 @@ public class ProdutoDAO {
     //chamadas a microsservicos
     public static final String URL_COM_FILTRO_NACIONALIDADE = "http://ms01_catalogoprod:8080/catalogoprod/search/findByFornecedorPais?pais=";
     public static final String URL_COM_FILTRO_TIPO = "http://ms01_catalogoprod:8080/catalogoprod/search/findByTipo?tipo=";
-    public static final String URL_SEM_FILTRO = "http://ms01_catalogoprod:8080/catalogoprod/";
+    public static final String URL_SEM_FILTRO = "http://ms01_catalogoprod:8080/catalogoprod";
     public static final String URL_COM_FILTRO_ID = "http://ms01_catalogoprod:8080/catalogoprod/";
 
     private Map<Filtro, Object> filtros;
@@ -44,13 +44,13 @@ public class ProdutoDAO {
         if (filtros.containsKey(Filtro.nacionalidadeFornecedor)) {
             String url = URL_COM_FILTRO_NACIONALIDADE+filtros.get(Filtro.nacionalidadeFornecedor);
             outerList = produtoRestfulServiceProvider.fetchListForProdutos(url);
-            filtros.remove(Filtro.pais); //jah usou
+            filtros.remove(Filtro.pais); //ja usou
         } else {
             //LIMITACAO DA API
             if (filtros.containsKey(Filtro.tipo)) {
                 String url = URL_COM_FILTRO_TIPO+filtros.get(Filtro.tipo);
                 outerList = produtoRestfulServiceProvider.fetchListForProdutos(url);
-                filtros.remove(Filtro.tipo); //jah usou
+                filtros.remove(Filtro.tipo); //ja usou
             } else {
                 outerList = produtoRestfulServiceProvider.fetchListForProdutos(URL_SEM_FILTRO);
             }
@@ -72,10 +72,11 @@ public class ProdutoDAO {
         if (innerList != null) {
 
             //varre lista de itens e popula cada produto
-            innerList.stream().forEach(item -> item.refreshProduto(produtoRestfulServiceProvider.
-            fetchListForProduto(URL_COM_FILTRO_ID+item.getProduto().getId())));
+            innerList.stream().forEach(item ->
+                    item.refreshProduto(produtoRestfulServiceProvider.
+                        fetchListForProduto(URL_COM_FILTRO_ID+item.getProduto().getId())));
 
-            //retorn o que for valido
+            //retorna o que for valido
             return innerList.stream().filter(novoItemProduto -> {
                         //aplica filtros a instancia populada
                 if (filtros.containsKey(Filtro.modelo)) {

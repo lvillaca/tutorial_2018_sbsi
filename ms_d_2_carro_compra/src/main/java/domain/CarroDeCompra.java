@@ -13,7 +13,7 @@ import java.util.List;
 
 @RedisHash("carrosdecompra")
 @AllArgsConstructor
-@NoArgsConstructor //CUIDADO!! FAZ DIFERENCA SE HOUVER OBJS RELACIONADOS!!
+@NoArgsConstructor
 @Data
 public class CarroDeCompra implements Serializable {
     private static final long serialVersionUID = -8760272805649222785L;

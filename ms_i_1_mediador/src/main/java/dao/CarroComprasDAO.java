@@ -20,7 +20,7 @@ public class CarroComprasDAO {
     public List<CarroCompras> getCarroCompras() {
         List<CarroCompras> list;
         list = clienteRestfulServiceProvider.fetchListForCarroCompras(URL_SEM_FILTRO);
-        System.out.println("\n\nlistas"+list);
+        logger.debug("\n\nlistas"+list);
         return list;
     }
 }
