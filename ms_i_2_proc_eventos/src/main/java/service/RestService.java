@@ -34,20 +34,20 @@ public class RestService {
 
     @RequestMapping(value = "/totaisProdutos", method = RequestMethod.GET, produces = "application/json")
     public TreeMap<String,TreeMap<ChaveTotalMensal, TotalizadorItem>> getReportTotaisModelo() {
-        return processamentoReport.getMapaOrdenadoMediaModelo();
+        return processamentoReport.getMapaOrdenadoTotalizadorModelo();
     }
 
     @RequestMapping(value = "/totaisProdutosUltimosDozeMeses", method = RequestMethod.GET, produces = "application/json")
     public Map<java.lang.String, Map<ChaveTotalMensal, TotalizadorItem>> getReportTotaisModeloDoze() {
-        logger.debug(" Metodo A"+processamentoReport.getMapaOrdenadoMediaModelo());
+        logger.debug(" Metodo Totais 12 meses sort desc"+processamentoReport.getMapaOrdenadoTotalizadorModelo());
         return processamentoReport.getTotaisModeloDozeMeses();
     }
 
 
 
     @RequestMapping(value = "/mediasProdutos", method = RequestMethod.GET, produces = "application/json")
-    public Map<String, Double> getReportMediasModelo() {
-        logger.debug(" Metodo A");
+    public Map<String, String> getReportMediasModelo() {
+        logger.debug(" Metodo Media");
         return processamentoReport.getMediasModelo();
     }
 
@@ -81,7 +81,7 @@ public class RestService {
         String chaveCliente = "key_cliente";
 
         boolean durableFlag = true;
-        logger.debug(" Metodo B");
+        logger.debug(" MQ Listener - Produtos e Clientes");
 
         try {
             ConnectionFactory factory = new ConnectionFactory();
@@ -119,7 +119,9 @@ public class RestService {
         }
     }
 
-
+    /**
+     *
+     */
     private void getCarrosMQ() {
 
         String exchange_name = "ex_direct";
@@ -129,7 +131,7 @@ public class RestService {
         String queueName = "queue_carro";
 
         boolean durableFlag = true;
-        logger.debug(" Metodo B");
+        logger.debug(" MQ Listener - Carros de Compra");
 
         try {
             ConnectionFactory factory = new ConnectionFactory();

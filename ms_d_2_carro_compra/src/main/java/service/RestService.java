@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,16 +56,16 @@ public class RestService {
 
         // itens de compra
         List<ItemCarroDeCompra> items = new ArrayList<>();
-        items.add(new ItemCarroDeCompra("007",quantidade*1,24));
-        items.add(new ItemCarroDeCompra("006",quantidade*2,23));
+        items.add(new ItemCarroDeCompra("007",quantidade*1,new BigDecimal(24.00)));
+        items.add(new ItemCarroDeCompra("006",quantidade*2,new BigDecimal(33)));
         //fechando um carro
         CarroDeCompra carr = new CarroDeCompra("0704354"+numMesesAntes,items,"006", dt);
         carroDeCompraRepository.save(carr);
 
         // itens de compra
         List<ItemCarroDeCompra> items2 = new ArrayList<>();
-        items2.add(new ItemCarroDeCompra("006",quantidade+2,24));
-        items2.add(new ItemCarroDeCompra("007",quantidade+1,44));
+        items2.add(new ItemCarroDeCompra("006",quantidade+2,new BigDecimal(70)));
+        items2.add(new ItemCarroDeCompra("007",quantidade+1,new BigDecimal(54)));
         //fechando outro carro
         CarroDeCompra carr2 = new CarroDeCompra("070424"+numMesesAntes,items2,"007", dt);
         carroDeCompraRepository.save(carr2);

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,6 +15,6 @@ public class ItemCarroDeCompra {
 
     String idProdutoEscolhido;
     int qtdProduto;
-    long valorUnitario;
+    Double valorUnitario;
 }
 

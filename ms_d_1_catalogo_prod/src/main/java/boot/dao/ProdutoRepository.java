@@ -13,4 +13,5 @@ import java.util.List;
 public interface ProdutoRepository extends CrudRepository<Produto, String> {
     List<Produto> findByFornecedorPais(@Param("pais") Country country);
     List<Produto> findByTipo(@Param("tipo") TipoProduto tipo);
+    List<Produto> findByFornecedorPaisAndTipo(@Param("pais") Country country, @Param("tipo") TipoProduto tipo);
 }

@@ -21,6 +21,8 @@ public class ProdutoDAO {
     //chamadas a microsservicos
     public static final String URL_COM_FILTRO_NACIONALIDADE = "http://ms01_catalogoprod:8080/catalogoprod/search/findByFornecedorPais?pais=";
     public static final String URL_COM_FILTRO_TIPO = "http://ms01_catalogoprod:8080/catalogoprod/search/findByTipo?tipo=";
+    public static final String URL_COM_FILTRO_NACIONALIDADE_E_TIPO = "http://ms01_catalogoprod:8080/catalogoprod/search/findByFornecedorPaisAndTipo?pais=PAIS&tipo=TIPO";
+
     public static final String URL_SEM_FILTRO = "http://ms01_catalogoprod:8080/catalogoprod";
     public static final String URL_COM_FILTRO_ID = "http://ms01_catalogoprod:8080/catalogoprod/";
 
@@ -41,29 +43,31 @@ public class ProdutoDAO {
         List<Produto> outerList = null;
 
         //Aproveitando a API
-        if (filtros.containsKey(Filtro.nacionalidadeFornecedor)) {
-            String url = URL_COM_FILTRO_NACIONALIDADE+filtros.get(Filtro.nacionalidadeFornecedor);
-            outerList = produtoRestfulServiceProvider.fetchListForProdutos(url);
-            filtros.remove(Filtro.pais); //ja usou
+        if (filtros.containsKey(Filtro.paisFornecedor)) {
+            if (filtros.containsKey(Filtro.tipo)) {
+                String url = URL_COM_FILTRO_NACIONALIDADE_E_TIPO
+                        .replaceFirst("PAIS",(String)filtros.get(Filtro.paisFornecedor))
+                        .replaceFirst("TIPO",(String)filtros.get(Filtro.tipo));
+                System.out.println(url);
+                outerList = produtoRestfulServiceProvider.fetchListForProdutos(url);
+            } else {
+                String url = URL_COM_FILTRO_NACIONALIDADE+filtros.get(Filtro.paisFornecedor);
+                System.out.println(url);
+                outerList = produtoRestfulServiceProvider.fetchListForProdutos(url);
+            }
+
         } else {
-            //LIMITACAO DA API
             if (filtros.containsKey(Filtro.tipo)) {
                 String url = URL_COM_FILTRO_TIPO+filtros.get(Filtro.tipo);
+                System.out.println(url);
                 outerList = produtoRestfulServiceProvider.fetchListForProdutos(url);
-                filtros.remove(Filtro.tipo); //ja usou
             } else {
+                System.out.println(URL_SEM_FILTRO);
                 outerList = produtoRestfulServiceProvider.fetchListForProdutos(URL_SEM_FILTRO);
             }
         }
 
-        //Se a API nao dispoe de filtros simultaneos, aplicar depois...
-        return outerList.stream().filter(produto -> {
-            if (filtros.containsKey(Filtro.tipo)) {
-                return produto.getTipo().equals(filtros.get(Filtro.tipo));
-            } else {
-                return true;
-            }
-        }).collect(Collectors.toList());
+        return outerList;
 
     }
 

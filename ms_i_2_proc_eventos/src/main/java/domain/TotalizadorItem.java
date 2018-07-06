@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TotalizadorItem {
-    long totalCompra;
+    Double totalCompra;
     int quantidade;
 }

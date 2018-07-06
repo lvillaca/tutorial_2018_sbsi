@@ -3,17 +3,18 @@ package report;
 import domain.*;
 import org.springframework.stereotype.Component;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
 public class Processamento {
-    final TreeMap<String,TreeMap<ChaveTotalMensal, TotalizadorItem>> mapaOrdenadoMediaModelo = new TreeMap<>();
+    final TreeMap<String,TreeMap<ChaveTotalMensal, TotalizadorItem>> mapaOrdenadoTotalizadorModelo = new TreeMap<>();
     final Map<String, Produto> mapaProdutos = new HashMap<>();
     final Map<String, Cliente> mapaClientes = new HashMap<>();
 
-    public TreeMap<String,TreeMap<ChaveTotalMensal, TotalizadorItem>> getMapaOrdenadoMediaModelo() {
-        return mapaOrdenadoMediaModelo;
+    public TreeMap<String,TreeMap<ChaveTotalMensal, TotalizadorItem>> getMapaOrdenadoTotalizadorModelo() {
+        return mapaOrdenadoTotalizadorModelo;
     }
 
     /**
@@ -56,31 +57,31 @@ public class Processamento {
         {
             Produto produtoCarroDeCompra = mapaProdutos.get(itemCarroDeCompra.getIdProdutoEscolhido());
 
-            if (!mapaOrdenadoMediaModelo.containsKey(produtoCarroDeCompra.getModelo())) {
+            if (!mapaOrdenadoTotalizadorModelo.containsKey(produtoCarroDeCompra.getModelo())) {
 
                 //1o caso - insercao - novo modelo
-                mapaOrdenadoMediaModelo.put(produtoCarroDeCompra.getModelo(), new TreeMap<>());
+                mapaOrdenadoTotalizadorModelo.put(produtoCarroDeCompra.getModelo(), new TreeMap<>());
 
                 //nesse caso - insercao - novo mes
                 criaItemMensalModelo(itemCarroDeCompra,dataCompra,
-                        mapaOrdenadoMediaModelo.get(produtoCarroDeCompra.getModelo()));
+                        mapaOrdenadoTotalizadorModelo.get(produtoCarroDeCompra.getModelo()));
 
             } else {
 
                 //2o caso - modelo existe, mas mes nao
                 ChaveTotalMensal chaveTotalMensal = new ChaveTotalMensal(dataCompra);
-                if (!mapaOrdenadoMediaModelo.get(produtoCarroDeCompra.getModelo()).containsKey(chaveTotalMensal)) {
+                if (!mapaOrdenadoTotalizadorModelo.get(produtoCarroDeCompra.getModelo()).containsKey(chaveTotalMensal)) {
 
                     //nesse caso - insercao - novo mes
                     criaItemMensalModelo(itemCarroDeCompra,dataCompra,
-                            mapaOrdenadoMediaModelo.get(produtoCarroDeCompra.getModelo()));
+                            mapaOrdenadoTotalizadorModelo.get(produtoCarroDeCompra.getModelo()));
                 }
 
                 else {
 
                     //3o caso - modelo e mes existem, refaz a media
                     TotalizadorItem totalizadorItemMensal =
-                            mapaOrdenadoMediaModelo.get(produtoCarroDeCompra.getModelo()).get(chaveTotalMensal);
+                            mapaOrdenadoTotalizadorModelo.get(produtoCarroDeCompra.getModelo()).get(chaveTotalMensal);
 
                     //atualiza Media
                     atualizaItemMensalModelo(totalizadorItemMensal,itemCarroDeCompra);
@@ -116,7 +117,7 @@ public class Processamento {
      */
     public void atualizaItemMensalModelo(TotalizadorItem totalizadorItemMensal, ItemCarroDeCompra itemCarroDeCompra) {
         int quantidadeAntes = totalizadorItemMensal.getQuantidade();
-        long totalAntes = totalizadorItemMensal.getTotalCompra();
+        Double totalAntes = totalizadorItemMensal.getTotalCompra();
         totalizadorItemMensal.setTotalCompra(
                 totalAntes +itemCarroDeCompra.getValorUnitario()*itemCarroDeCompra.getQtdProduto()
         );
@@ -124,18 +125,18 @@ public class Processamento {
     }
 
     /**
-     * Calcula e retorna a media de cada modelo
-     * @return
+     * Calcula e retorna a media de cada modelo. Pega chaves em ordem reversa, mapeia para total e calcula media
+     * @return Map com medias por modelo
      */
-    public Map<String, Double> getMediasModelo() {
+    public Map<String, String> getMediasModelo() {
 
-        Map<java.lang.String, java.lang.Double> medias = new HashMap<>();
-        mapaOrdenadoMediaModelo.
+        Map<java.lang.String, java.lang.String> medias = new HashMap<>();
+        mapaOrdenadoTotalizadorModelo.
                 forEach((modelo, mapaProds) -> {
-                    medias.put(modelo,
+                    medias.put(modelo, new DecimalFormat("#.##").format(
                             mapaProds.descendingKeySet().stream().limit(12).mapToDouble(
                                     chaveTotalMensal -> mapaProds.get(chaveTotalMensal).getTotalCompra()
-                            ).average().getAsDouble());
+                            ).average().getAsDouble()));
                 });
         return medias;
     }
@@ -148,11 +149,11 @@ public class Processamento {
 
         Map<java.lang.String, Map<ChaveTotalMensal, TotalizadorItem>> totais = new TreeMap();
 
-        mapaOrdenadoMediaModelo.
+        mapaOrdenadoTotalizadorModelo.
                 forEach((modelo, mapaProds) -> {
                             Map<ChaveTotalMensal, TotalizadorItem> meses =
                                     mapaProds.descendingKeySet().stream().limit(12).collect(Collectors.toMap(
-                                            chave -> chave, chave -> mapaOrdenadoMediaModelo.get(modelo).get(chave)));
+                                            chave -> chave, chave -> mapaOrdenadoTotalizadorModelo.get(modelo).get(chave)));
                             ///// sort reverse
                             Map<ChaveTotalMensal, TotalizadorItem> mesesSort = new TreeMap<>(
                                     new Comparator<ChaveTotalMensal>() {
